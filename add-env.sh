@@ -1,10 +1,17 @@
 #!/bin/bash
 set -e
 
+echo '#!/bin/bash' > ./tmp.sh
+echo 'set -e' >> ./tmp.sh
+echo '' >> ./tmp.sh
+
 # https://github.com/JimCronqvist/action-ssh/blob/7737f1192ddd8376686e9d6354dea44592c942bf/entrypoint.sh#L14-L21
-echo '# Environment variables:' >> ./ssh-script-deploy.sh
-env -0 | while read -r -d '' line; do
-  [[ ! ${line} =~ ^(HOSTNAME=|HOME=|INPUT_) ]] && echo "${line%%=*}='$(echo "${line#*=}" | sed "s/'/'\\\\''/g")'" >> ~/ssh-script-deploy.sh
+echo '# Environment variables:' >> ./tmp.sh
+declare -px | while read line; do
+  echo $line >> ./tmp.sh
 done
-echo '' >> ./ssh-script-deploy.sh
-echo '# Commands:' >> ./ssh-script-deploy.sh
+echo '' >> ./tmp.sh
+echo '# Commands:' >> ./tmp.sh
+cat _ssh-script-deploy.sh >> ./tmp.sh
+
+mv ./tmp.sh ./ssh-script-deploy.sh

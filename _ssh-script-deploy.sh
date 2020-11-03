@@ -1,5 +1,3 @@
-#!/bin/bash
-set -e
 source ~/.bash_profile
 
 echo "WWW_SUBDOMAIN" $WWW_SUBDOMAIN
