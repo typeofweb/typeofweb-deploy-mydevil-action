@@ -34,6 +34,7 @@ runs:
       shell: bash
       env:
         SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        SSH_PRIVATE_KEY: ${{ inputs.ssh_private_key }}
         HOST: ${{ inputs.host }}
         USERNAME: ${{ inputs.username }}
         WWW_SUBDOMAIN: ${{ inputs.frontend_subdomain }}
@@ -46,6 +47,6 @@ runs:
         ssh-keyscan -H github.com >> ~/.ssh/known_hosts
         ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
-        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+        ssh-add - <<< $SSH_PRIVATE_KEY
         BRANCH=${GITHUB_REF##*/}
         ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
