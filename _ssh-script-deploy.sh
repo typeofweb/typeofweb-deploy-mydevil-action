@@ -12,8 +12,10 @@ if [[ -z $WWW_SUBDOMAIN || -z $API_SUBDOMAIN || -z $BRANCH || -z $DOMAIN || -z $
   exit 1
 fi
 
+npm install -g yarn@1.22
+
 node -v
-yarn -v
+yarnpkg -v
 
 cd $PROJECT_DIRECTORY/$ENV
 
@@ -31,19 +33,19 @@ cp .version apps/api/
 cp .version apps/www/
 
 echo "👩‍💻 Installing both API and WWW"
-yarn install --frozen-lockfile
+yarnpkg install --frozen-lockfile
 
 echo "👉 Running API migrations…"
-NODE_ENV=production ENV=$ENV yarn workspace api db:migrate:up
+NODE_ENV=production ENV=$ENV yarnpkg workspace api db:migrate:up
 
 echo "👉 Restarting API server…"
 devil www restart $API_SUBDOMAIN.$DOMAIN
 curl --fail -I https://$API_SUBDOMAIN.$DOMAIN
 
 echo "👉 Bulding WWW…"
-yarn workspace www rimraf .next/static
-yarn workspace www rimraf .next/server
-NODE_ENV=production ENV=$ENV yarn workspace www build
+yarnpkg workspace www rimraf .next/static
+yarnpkg workspace www rimraf .next/server
+NODE_ENV=production ENV=$ENV yarnpkg workspace www build
 
 echo "👉 Restarting WWW server…"
 devil www restart $WWW_SUBDOMAIN.$DOMAIN
