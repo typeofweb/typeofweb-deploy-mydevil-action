@@ -15,3 +15,4 @@ echo '# Commands:' >> $(dirname $0)/tmp.sh
 cat $(dirname $0)/_ssh-script-deploy.sh >> $(dirname $0)/tmp.sh
 
 mv $(dirname $0)/tmp.sh $(dirname $0)/ssh-script-deploy.sh
+chmod +x $(dirname $0)/ssh-script-deploy.sh

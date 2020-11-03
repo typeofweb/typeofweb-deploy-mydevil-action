@@ -48,7 +48,5 @@ runs:
         ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
         ssh-add - <<< $SSH_PRIVATE_KEY
-        BRANCH=${GITHUB_REF##*/}
-        ${{ github.action_path }}/add-env.sh
-        cat ${{ github.action_path }}/ssh-script-deploy.sh
+        BRANCH=${GITHUB_REF##*/} ${{ github.action_path }}/add-env.sh
         ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
