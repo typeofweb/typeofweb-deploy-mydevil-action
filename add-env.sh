@@ -7,12 +7,12 @@ echo '' >> $(dirname $0)/tmp.sh
 
 echo '# Environment variables:' >> $(dirname $0)/tmp.sh
 
-echo $WWW_SUBDOMAIN >> $(dirname $0)/tmp.sh
-echo $API_SUBDOMAIN >> $(dirname $0)/tmp.sh
-echo $BRANCH >> $(dirname $0)/tmp.sh
-echo $DOMAIN >> $(dirname $0)/tmp.sh
-echo $PROJECT_DIRECTORY >> $(dirname $0)/tmp.sh
-echo $ENV >> $(dirname $0)/tmp.sh
+echo "export WWW_SUBDOMAIN=$WWW_SUBDOMAIN" >> $(dirname $0)/tmp.sh
+echo "export API_SUBDOMAIN=$API_SUBDOMAIN" >> $(dirname $0)/tmp.sh
+echo "export BRANCH=$BRANCH" >> $(dirname $0)/tmp.sh
+echo "export DOMAIN=$DOMAIN" >> $(dirname $0)/tmp.sh
+echo "export PROJECT_DIRECTORY=$PROJECT_DIRECTORY" >> $(dirname $0)/tmp.sh
+echo "export ENV=$ENV" >> $(dirname $0)/tmp.sh
 
 # declare -px | while read line; do
 #   echo $line >> $(dirname $0)/tmp.sh
