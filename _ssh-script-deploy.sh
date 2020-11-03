@@ -12,6 +12,8 @@ if [[ -z $WWW_SUBDOMAIN || -z $API_SUBDOMAIN || -z $BRANCH || -z $DOMAIN || -z $
   exit 1
 fi
 
+mkdir -p ~/bin && ln -fs /usr/local/bin/node12 ~/bin/node && ln -fs /usr/local/bin/npm12 ~/bin/npm && source $HOME/.bash_profile
+
 npm install -g yarn@1.22
 
 node -v
@@ -33,7 +35,7 @@ cp .version apps/api/
 cp .version apps/www/
 
 echo "👩‍💻 Installing both API and WWW"
-yarnpkg install --frozen-lockfile
+yarnpkg install --frozen-lockfile --ignore-platform --ignore-optional
 
 echo "👉 Running API migrations…"
 NODE_ENV=production ENV=$ENV yarnpkg workspace api db:migrate:up
