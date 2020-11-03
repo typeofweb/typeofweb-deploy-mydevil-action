@@ -1,4 +1,4 @@
-source ~/.bash_profile
+# source ~/.bash_profile
 
 echo "WWW_SUBDOMAIN" $WWW_SUBDOMAIN
 echo "API_SUBDOMAIN" $API_SUBDOMAIN

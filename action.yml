@@ -50,4 +50,5 @@ runs:
         ssh-add - <<< $SSH_PRIVATE_KEY
         BRANCH=${GITHUB_REF##*/}
         ${{ github.action_path }}/add-env.sh
+        cat ${{ github.action_path }}/ssh-script-deploy.sh
         ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
