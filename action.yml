@@ -49,4 +49,9 @@ runs:
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
         ssh-add - <<< $SSH_PRIVATE_KEY
         BRANCH=${GITHUB_REF##*/}
-        ssh $USERNAME@$HOST WWW_SUBDOMAIN=$WWW_SUBDOMAIN API_SUBDOMAIN=$API_SUBDOMAIN BRANCH=$BRANCH DOMAIN=$DOMAIN PROJECT_DIRECTORY=$PROJECT_DIRECTORY ENV=$ENV 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
+
+        echo '# Environment variables:' >> ~/script.sh
+        env -0 | while read -r -d '' line; do [[ ! ${line} =~ ^(HOSTNAME=|HOME=|INPUT_) ]] && echo "${line%%=*}='$(echo "${line#*=}" | sed "s/'/'\\\\''/g")'" >> ${{ github.action_path }}/ssh-script-deploy.sh done
+        echo '' >> ${{ github.action_path }}/ssh-script-deploy.sh
+
+        ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
