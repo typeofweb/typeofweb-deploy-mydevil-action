@@ -49,4 +49,4 @@ runs:
         ssh-agent -a $SSH_AUTH_SOCK > /dev/null
         ssh-add - <<< $SSH_PRIVATE_KEY
         BRANCH=${GITHUB_REF##*/}
-        ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
+        ssh $USERNAME@$HOST WWW_SUBDOMAIN=$WWW_SUBDOMAIN API_SUBDOMAIN=$API_SUBDOMAIN BRANCH=$BRANCH DOMAIN=$DOMAIN PROJECT_DIRECTORY=$PROJECT_DIRECTORY ENV=$ENV 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
