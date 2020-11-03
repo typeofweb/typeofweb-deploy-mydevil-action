@@ -12,6 +12,6 @@ declare -px | while read line; do
 done
 echo '' >> ./tmp.sh
 echo '# Commands:' >> ./tmp.sh
-cat _ssh-script-deploy.sh >> ./tmp.sh
+cat ./_ssh-script-deploy.sh >> ./tmp.sh
 
 mv ./tmp.sh ./ssh-script-deploy.sh
