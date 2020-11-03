@@ -10,14 +10,15 @@ fi
 node -v
 yarn -v
 
-cd $PROJECT_DIRECTORY/$ENV
-
 echo "WWW_SUBDOMAIN" $WWW_SUBDOMAIN
 echo "API_SUBDOMAIN" $API_SUBDOMAIN
 echo "BRANCH" $BRANCH
 echo "DOMAIN" $DOMAIN
 echo "PROJECT_DIRECTORY" $PROJECT_DIRECTORY
 echo "ENV" $ENV
+
+cd $PROJECT_DIRECTORY/$ENV
+
 echo "Current directory:" $(pwd)
 
 echo "👉 Pulling from the server…"
