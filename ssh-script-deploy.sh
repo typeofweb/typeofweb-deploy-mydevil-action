@@ -2,6 +2,13 @@
 set -e
 source ~/.bash_profile
 
+echo "WWW_SUBDOMAIN" $WWW_SUBDOMAIN
+echo "API_SUBDOMAIN" $API_SUBDOMAIN
+echo "BRANCH" $BRANCH
+echo "DOMAIN" $DOMAIN
+echo "PROJECT_DIRECTORY" $PROJECT_DIRECTORY
+echo "ENV" $ENV
+
 if [[ -z $WWW_SUBDOMAIN || -z $API_SUBDOMAIN || -z $BRANCH || -z $DOMAIN || -z $PROJECT_DIRECTORY || -z $ENV ]]; then
   echo "Invalid configuration"
   exit 1
@@ -9,13 +16,6 @@ fi
 
 node -v
 yarn -v
-
-echo "WWW_SUBDOMAIN" $WWW_SUBDOMAIN
-echo "API_SUBDOMAIN" $API_SUBDOMAIN
-echo "BRANCH" $BRANCH
-echo "DOMAIN" $DOMAIN
-echo "PROJECT_DIRECTORY" $PROJECT_DIRECTORY
-echo "ENV" $ENV
 
 cd $PROJECT_DIRECTORY/$ENV
 
