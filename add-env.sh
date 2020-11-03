@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
 
+echo "BASH_SOURCE" ${BASH_SOURCE}
+echo "0" $0
+echo "pwd" $(pwd)
+
 echo '#!/bin/bash' > ./tmp.sh
 echo 'set -e' >> ./tmp.sh
 echo '' >> ./tmp.sh
