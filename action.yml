@@ -1,0 +1,51 @@
+name: 'Type of Web MyDevil Deploy'
+description: 'Automatically deploy to MyDevil'
+inputs:
+  host:
+    description: 'sXX.mydevil.net'
+    required: true
+  username:
+    description: 'Username used for SSH'
+    required: true
+  ssh_private_key:
+    description: 'Use secret for this!'
+    required: true
+  frontend_subdomain:
+    description: 'Subdomain on which frontend runs i.e. www'
+    required: true
+  api_subdomain:
+    description: 'Subdomain on which API runs i.e. api'
+    required: true
+  env:
+    description: 'ENV'
+    required: true
+    default: 'production'
+  domain:
+    description: 'Domain of the APP i.e. devfaq.pl'
+    required: true
+  project_directory:
+    description: 'Path under which the project is stored i.e. ~/domains/devfaq.pl/devfaq'
+    required: true
+
+runs:
+  using: "composite"
+  steps: 
+    - name: Setup SSH Keys and known_hosts
+      shell: bash
+      env:
+        SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        HOST: ${{ inputs.host }}
+        USERNAME: ${{ inputs.username }}
+        WWW_SUBDOMAIN: ${{ inputs.frontend_subdomain }}
+        API_SUBDOMAIN: ${{ inputs.api_subdomain }}
+        DOMAIN: ${{ inputs.domain }}
+        PROJECT_DIRECTORY: ${{ inputs.project_directory }}
+        ENV: ${{ inputs.env }}
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H github.com >> ~/.ssh/known_hosts
+        ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+        ssh-agent -a $SSH_AUTH_SOCK > /dev/null
+        ssh-add - <<< "${{ secrets.SSH_PRIVATE_KEY }}"
+        BRANCH=${GITHUB_REF##*/}
+        ssh $USERNAME@$HOST 'source ~/.bashrc && ssh-add ~/.ssh/github && bash -s' < ${{ github.action_path }}/ssh-script-deploy.sh
