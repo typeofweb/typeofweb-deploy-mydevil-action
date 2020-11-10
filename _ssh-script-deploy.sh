@@ -36,6 +36,7 @@ cp .version apps/www/
 
 echo "👩‍💻 Installing both API and WWW"
 yarnpkg install --frozen-lockfile --ignore-platform --ignore-optional
+yarnpkg lerna bootstrap --ci --force-local
 
 echo "👉 Running API migrations…"
 NODE_ENV=production ENV=$ENV yarnpkg workspace api db:migrate:up
